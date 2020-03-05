@@ -293,7 +293,7 @@ equal than 100 will create infinite loop\n");
 
       uint64_t total = 0;
       seg            = tid->first;
-      samplingRate = seg->samprate;
+      samplingRate   = seg->samprate;
       while (seg)
       {
         total += seg->samplecnt;
@@ -417,8 +417,8 @@ equal than 100 will create infinite loop\n");
       double min, max, minDemean, maxDemean, maxamp, maxampDemean;
       getMinMaxAndDemean (data, dataSize, &min, &max,
                           &minDemean, &maxDemean, mean);
-      maxamp = (abs(max) > abs(min)) ? abs(max) : abs(min);
-      maxampDemean = (abs(maxDemean) > abs(minDemean)) ? abs(maxDemean) : abs(minDemean);
+      maxamp       = (abs (max) > abs (min)) ? abs (max) : abs (min);
+      maxampDemean = (abs (maxDemean) > abs (minDemean)) ? abs (maxDemean) : abs (minDemean);
 
       /* Output timestamp, mean and standard deviation to output files */
       write2RMS (fptrRMS, timeStamp - timeStampFirst, mean, SD,
