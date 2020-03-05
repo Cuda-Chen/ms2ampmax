@@ -20,19 +20,19 @@ write2RMS (FILE *file, nstime_t timeStamp, double mean, double SD,
            double min, double max, double minDemean, double maxDemean)
 {
   int timeStampInSecond = timeStamp / NSECS;
-  fprintf (file, "%d,%.2lf,%.2lf,%.2lf,%.2lf,%.2lf,%.2lf\r\n", timeStampInSecond, mean, SD,
+  fprintf (file, "%d,%.2lf,%.2lf,%.2lf,%.2lf\r\n", timeStampInSecond,
            min, max, minDemean, maxDemean);
 }
 
 static void
 usage ()
 {
-  printf ("Usage: ./ms2rms <mseedfile> <time window size> <window overlap>\n");
+  printf ("Usage: ./ms2ampmax <mseedfile> <time window size> <window overlap>\n");
   printf ("\nOutput format: \n");
   printf ("\
-<time stamp of the first window>,<station>,<network>,<channel>,<location>,<CR><LF>\n\
-<time difference between this window to the first window>,<mean>,<SD>,<min>,<max>,<minDemean>,<maxDemean>,<CR><LF>\n\
-<time difference between this window to the first window>,<mean>,<SD>,<min>,<max>,<minDemean>,<maxDemean>,<CR><LF>\n\
+<time stamp of the first window contains data>,<station>,<network>,<channel>,<location>,<CR><LF>\n\
+<time difference between this window to the first window>,<min>,<max>,<minDemean>,<maxDemean>,<CR><LF>\n\
+<time difference between this window to the first window>,<min>,<max>,<minDemean>,<maxDemean>,<CR><LF>\n\
 ...  \
 \n");
 }
@@ -62,11 +62,10 @@ main (int argc, char **argv)
   FILE *fptrJSON;
   char *outputFileRMS;
   char *outputFileJSON;
-  const char *RMSExtension  = ".rms";
+  const char *RMSExtension  = ".ampmax";
   const char *JSONExtension = ".json";
 
   /* Buffers for storing source id, network, station, location and channel */
-  //char sid[LM_SIDLEN];
   char network[11];
   char station[11];
   char location[11];
@@ -405,16 +404,6 @@ equal than 100 will create infinite loop\n");
       /* print the data samples of every trace */
       printf ("data samples of this trace: %" PRId64 " index: %" PRId64 "\n", dataSize, index);
 #endif
-      /* If total < samplingRate, ignore this trace */
-/*
-      if (total < 20 * samplingRate)
-      {
-        printf ("Number of data of this trace is smaller than 20 * %lf\n", samplingRate);
-        
-        free (data);
-        tid = tid->next;
-        continue;
-      }*/
 
       /* Calculate the mean and standard deviation */
       double mean, SD;

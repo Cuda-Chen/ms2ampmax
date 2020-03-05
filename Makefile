@@ -1,7 +1,7 @@
 DEBUG = 0
 
 CC = gcc
-EXEC = ms2rms
+EXEC = ms2ampmax
 COMMON = -I./libmseed/ -I.
 CFLAGS =  -Wall
 LDFLAGS = -L./libmseed -Wl,-rpath,./libmseed
