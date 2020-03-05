@@ -17,11 +17,12 @@ static nstime_t NSECS = 1000000000;
 
 static void
 write2RMS (FILE *file, nstime_t timeStamp, double mean, double SD,
-           double min, double max, double minDemean, double maxDemean)
+           double min, double max, double minDemean, double maxDemean,
+           double maxamp, double maxampDemean)
 {
   int timeStampInSecond = timeStamp / NSECS;
-  fprintf (file, "%d,%.2lf,%.2lf,%.2lf,%.2lf\r\n", timeStampInSecond,
-           min, max, minDemean, maxDemean);
+  fprintf (file, "%d,%.2lf,%.2lf,%.2lf,%.2lf,%.2lf,%.2lf\r\n", timeStampInSecond,
+           min, max, minDemean, maxDemean, maxamp, maxampDemean);
 }
 
 static void
@@ -31,8 +32,8 @@ usage ()
   printf ("\nOutput format: \n");
   printf ("\
 <time stamp of the first window contains data>,<station>,<network>,<channel>,<location>,<CR><LF>\n\
-<time difference between this window to the first window>,<min>,<max>,<minDemean>,<maxDemean>,<CR><LF>\n\
-<time difference between this window to the first window>,<min>,<max>,<minDemean>,<maxDemean>,<CR><LF>\n\
+<time difference between this window to the first window>,<min>,<max>,<minDemean>,<maxDemean>,<maxamp>,<maxampDemean><CR><LF>\n\
+<time difference between this window to the first window>,<min>,<max>,<minDemean>,<maxDemean>,<maxamp>,<maxampDemean><CR><LF>\n\
 ...  \
 \n");
 }
@@ -412,14 +413,16 @@ equal than 100 will create infinite loop\n");
       printf ("mean: %.2lf standard deviation: %.2lf\n", mean, SD);
       printf ("\n");
 #endif
-      /* Calculate the min and max with all and demain */
-      double min, max, minDemean, maxDemean;
+      /* Calculate the min and max with all and demean */
+      double min, max, minDemean, maxDemean, maxamp, maxampDemean;
       getMinMaxAndDemean (data, dataSize, &min, &max,
                           &minDemean, &maxDemean, mean);
+      maxamp = (abs(max) > abs(min)) ? abs(max) : abs(min);
+      maxampDemean = (abs(maxDemean) > abs(minDemean)) ? abs(maxDemean) : abs(minDemean);
 
       /* Output timestamp, mean and standard deviation to output files */
       write2RMS (fptrRMS, timeStamp - timeStampFirst, mean, SD,
-                 min, max, minDemean, maxDemean);
+                 min, max, minDemean, maxDemean, maxamp, maxampDemean);
       //write2RMS(fptrRMS, timeStampStr, mean, SD);
       if (i == segments - 1)
       {
