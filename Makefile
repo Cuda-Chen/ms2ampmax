@@ -7,7 +7,7 @@ CFLAGS =  -Wall
 LDFLAGS = -L./libmseed -Wl,-rpath,./libmseed
 LDLIBS = -Wl,-Bstatic -lmseed -Wl,-Bdynamic -lm
 
-OBJS = test.o standard_deviation.o min_max.o
+OBJS = temp.o standard_deviation.o min_max.o
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -O0 -g -DDEBUG=1
