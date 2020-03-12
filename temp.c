@@ -46,7 +46,7 @@ main (int argc, char **argv)
   /* Set flags to validate CRCs while reading */
   flags |= MSF_VALIDATECRC;
   /* Unpack the data */
-  flags |= MSF_UNPACKDATA;
+  flags |= MSF_RECORDLIST;
 
   /* Read all miniSEED into a trace list */
   rv = ms3_readtracelist (&mstl, mseedfile, NULL, 0, flags, verbose);
@@ -70,6 +70,9 @@ main (int argc, char **argv)
       totalSamples += seg->samplecnt;
       seg = seg->next;
     }
+#ifdef DEBUG
+      printf ("estimated samples of this trace: %" PRId64 "\n", totalSamples);
+#endif
 
     /* Get the data of this trace */
     seg            = tid->first;
@@ -117,24 +120,33 @@ main (int argc, char **argv)
               if (sampletype == 'i')
               {
                 data[index] = (double)(*(int32_t *)sptr);
+#ifdef DEBUG
+                printf("%lf,%lf\n", data[index], (double)(*(int32_t *)sptr));
+#endif
               }
               else if (sampletype == 'f')
               {
-                data[index] = (double)(*(float *)sptr);
+                data[index] = (double)(*(float *)sptr);                
+#ifdef DEBUG
+                printf("%lf,%lf\n", data[index], (double)(*(float *)sptr));
+#endif
               }
               else if (sampletype == 'd')
               {
                 data[index] = (double)(*(double *)sptr);
+#ifdef DEBUG
+                printf("%lf,%lf\n", data[index], (double)(*(double *)sptr));
+#endif
               }
+
+              index++;
             }
-            index++;
           }
         }
       }
 
       seg = seg->next;
     }
-    tid = tid->next;
 
     /* Calculate the min, max, and maxamp with all and demean */
     double mean, SD;
@@ -144,9 +156,14 @@ main (int argc, char **argv)
                         &minDemean, &maxDemean, mean);
     maxamp       = (abs (max) > abs (min)) ? abs (max) : abs (min);
     maxampDemean = (abs (maxDemean) > abs (minDemean)) ? abs (maxDemean) : abs (minDemean);
-
     printf ("max amplitute of this trace: %.2lf,%.2lf\n", maxamp, maxampDemean);
+
+    free(data);
+    tid = tid->next;
   }
 
+  /* Make sure everything is cleaned up */
+  if (mstl)
+      mstl3_free (&mstl, 0);
   return 0;
 }
