@@ -15,13 +15,7 @@ usage ()
 {
   printf ("Usage: ./ms2ampmax <mseedfile>\n");
   printf ("\nOutput format: \n");
-printf ("\
-<time stamp of the first window contains data>,<station>,<network>,<channel>,<location>,<CR><LF>\n\
-<time difference between this window to the first window>,<min>,<max>,<minDemean>,<maxDemean>,<maxamp>,<maxampDemean><CR><LF>\n\
-<time difference between this window to the first window>,<min>,<max>,<minDemean>,<maxDemean>,<maxamp>,<maxampDemean><CR><LF>\n\
-...  \
-\n");
-
+printf ("maximum amplitude of this file: <maximum>,<maximum with demean>\n");
 }
 
 int
