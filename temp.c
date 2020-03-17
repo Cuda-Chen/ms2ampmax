@@ -16,7 +16,7 @@ usage ()
 {
   printf ("Usage: ./ms2ampmax <mseedfile>\n");
   printf ("\nOutput format: \n");
-printf ("maximum amplitude of this file: <maximum>,<maximum with demean>\n");
+  printf ("<maximum> <maximum with demean>\n");
 }
 
 int
@@ -142,7 +142,7 @@ main (int argc, char **argv)
                         &minDemean, &maxDemean, mean);
     maxamp       = (fabs (max) > fabs (min)) ? fabs (max) : fabs (min);
     maxampDemean = (fabs (maxDemean) > fabs (minDemean)) ? fabs (maxDemean) : fabs (minDemean);
-    printf ("max amplitute of this trace: %.2lf,%.2lf\n", maxamp, maxampDemean);
+    printf ("%.5E %.5E\n", maxamp, maxampDemean);
 
     free(data);
     tid = tid->next;

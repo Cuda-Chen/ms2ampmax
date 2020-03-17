@@ -16,8 +16,8 @@ Where `time window size` is second and `window overlap` is percentage.
 
 # Output Format
 ```
-maximum amplitude of this file: <maximum>,<maximum with demean>
+<maximum> <maximum with demean>
 ```
 
 # NOTE
-The `mean` value will be rounded to hundredths place.
+~The `mean` value will be rounded to hundredths place.~

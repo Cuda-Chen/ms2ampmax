@@ -42,8 +42,12 @@ getMeanAndSD (double *data, uint64_t dataSize, double *_mean, double *_SD)
 #endif
 
   /* Round mean and SD to hundredths place */
+#if 0
   *_mean = round (mean * 100) / 100;
   *_SD   = round (sqrt (SD / dataSize) * 100) / 100;
+#endif
+  *_mean = mean;
+  *_SD = SD;
 }
 
 void
