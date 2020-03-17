@@ -40,6 +40,8 @@ getMeanAndSD (double *data, uint64_t dataSize, double *_mean, double *_SD)
 #ifdef DEBUG
   printf ("mean: %lf / %" PRId64 " = %lf\n", sum, dataSize, mean);
 #endif
+
+  /* Round mean and SD to hundredths place */
   *_mean = round (mean * 100) / 100;
   *_SD   = round (sqrt (SD / dataSize) * 100) / 100;
 }

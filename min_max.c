@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "min_max.h"
 
 void
@@ -19,6 +20,14 @@ getMinMaxAndDemean (double *data, uint64_t dataSize,
     }
   }
 
+#ifdef DEBUG
+  printf ("min: %lf, max: %lf\n", *min, *max);
+#endif
+
   *minDemean = *min - mean;
   *maxDemean = *max - mean;
+
+#ifdef DEBUG
+  printf ("minDemean: %lf, maxDemean: %lf, mean: %lf\n", *minDemean, *maxDemean, mean);
+#endif
 }

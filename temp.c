@@ -4,6 +4,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <limits.h>
+#include <math.h>
 
 #include "libmseed.h"
 
@@ -114,23 +115,14 @@ main (int argc, char **argv)
               if (sampletype == 'i')
               {
                 data[index] = (double)(*(int32_t *)sptr);
-#ifdef DEBUG
-                printf("%lf,%lf\n", data[index], (double)(*(int32_t *)sptr));
-#endif
               }
               else if (sampletype == 'f')
               {
                 data[index] = (double)(*(float *)sptr);                
-#ifdef DEBUG
-                printf("%lf,%lf\n", data[index], (double)(*(float *)sptr));
-#endif
               }
               else if (sampletype == 'd')
               {
                 data[index] = (double)(*(double *)sptr);
-#ifdef DEBUG
-                printf("%lf,%lf\n", data[index], (double)(*(double *)sptr));
-#endif
               }
 
               index++;
@@ -148,8 +140,8 @@ main (int argc, char **argv)
     double min, max, minDemean, maxDemean, maxamp, maxampDemean;
     getMinMaxAndDemean (data, totalSamples, &min, &max,
                         &minDemean, &maxDemean, mean);
-    maxamp       = (abs (max) > abs (min)) ? abs (max) : abs (min);
-    maxampDemean = (abs (maxDemean) > abs (minDemean)) ? abs (maxDemean) : abs (minDemean);
+    maxamp       = (fabs (max) > fabs (min)) ? fabs (max) : fabs (min);
+    maxampDemean = (fabs (maxDemean) > fabs (minDemean)) ? fabs (maxDemean) : fabs (minDemean);
     printf ("max amplitute of this trace: %.2lf,%.2lf\n", maxamp, maxampDemean);
 
     free(data);
