@@ -2,10 +2,13 @@ DEBUG = 0
 
 CC = gcc
 EXEC = ms2ampmax
-COMMON = -I./libmseed/ -I.
+#COMMON = -I./libmseed/ -I.
+COMMON = -I/usr/local/ -I.
 CFLAGS =  -Wall
-LDFLAGS = -L./libmseed -Wl,-rpath,./libmseed
-LDLIBS = -Wl,-Bstatic -lmseed -Wl,-Bdynamic -lm
+#LDFLAGS = -L./libmseed -Wl,-rpath,./libmseed
+LDFLAGS = -L/usr/local
+#LDLIBS = -Wl,-Bstatic -lmseed -Wl,-Bdynamic -lm
+LDLIBS = -lmseed -lm
 
 OBJS = temp.o standard_deviation.o min_max.o
 
