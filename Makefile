@@ -21,7 +21,6 @@ endif
 all: $(EXEC)
 
 $(EXEC): $(OBJS)
-	$(MAKE) -C libmseed/ static
 	$(CC) $(COMMON) $(CFLAGS) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
 %.o: %.c
