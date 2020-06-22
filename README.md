@@ -10,9 +10,8 @@ $ git clone https://github.com/Cuda-Chen/ms2ampmax.git --recursive
 Then run:
 ```
 $ make
-$ ./ms2ampmax <mseedfile path>
+$ ./ms2ampmax [mseedfile path]
 ```
-Where `time window size` is second and `window overlap` is percentage.
 
 # Output Format
 ```
